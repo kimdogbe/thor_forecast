@@ -1,10 +1,12 @@
 const apiKey = 'V6WW2UCQDJ3WU8WGJWSKGBS6X';
 const searchBtn = document.querySelector('#search-button');
 const searchBox = document.querySelector('#search-box');
+const loader = document.querySelector('.loader');
 
 searchBtn.addEventListener('click', (event) => {
   event.preventDefault();
   if (searchBox.value !== ''){
+    loader.style.display = 'block'
     createCards(searchBox.value);
   }
 });
@@ -104,5 +106,6 @@ async function createCards (city) {
     console.log(index, element);
     weatherCards.append(createWeatherCard(element, index));
   });
+  loader.style.display = 'none';
 }
 
