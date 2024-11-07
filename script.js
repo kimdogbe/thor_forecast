@@ -1,8 +1,4 @@
 const apiKey = 'V6WW2UCQDJ3WU8WGJWSKGBS6X';
-const rainGif = 'https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExcjNseDBuemlzZHRyMDhoZXZxOTN5cDhzbWw0bzV1dW5weDNnZmx1NCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/xT9DPAG03SyJ3LEwwM/giphy.webp'
-const sunGif = 'https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExcjNpa3F0cHJtY2VmemU5ZnhtZjV4NXd0aG5vcmZicnlmaTNsemJvcyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/j3RXuSbpXER4hCeX5F/giphy.webp'
-const overcastGif = 'https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExZ3dhaTN0NXFhaDFpMGN4YW81bGl4dzhiNDAycWVsMHNxaWtzOGFxaSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/dBXNPw0XBdF1n82BBf/giphy.webp'
-
 
 async function getWeather(location='bristol') {
   const url = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${location}?unitGroup=uk&key=${apiKey}&contentType=json`;
@@ -16,8 +12,8 @@ async function getWeather(location='bristol') {
     const data = await response.json();
     // const gifUrl = data.data.images.preview_webp.url;
 
-    console.log(data);
-    processWeatherData(data);
+    // console.log(data);
+    return processWeatherData(data);
   }
   catch (error) {
     console.error(error.message);
@@ -34,7 +30,49 @@ function processWeatherData (weatherData) {
   const dailyWeather = weatherData.days;
   
   console.log(`Forcast for ${fullLocation} at Longitude: ${long}, Latitude: ${lat}`);
+  return {lat, long, fullLocation, weatherDescription, currentConditions, dailyWeather};
 }
 
-// getWeather();
+function createWeatherCard (data, index) {
+  const rainGif = 'https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExcjNseDBuemlzZHRyMDhoZXZxOTN5cDhzbWw0bzV1dW5weDNnZmx1NCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/xT9DPAG03SyJ3LEwwM/giphy.webp'
+  const sunGif = 'https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExcjNpa3F0cHJtY2VmemU5ZnhtZjV4NXd0aG5vcmZicnlmaTNsemJvcyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/j3RXuSbpXER4hCeX5F/giphy.webp'
+  const overcastGif = 'https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExZ3dhaTN0NXFhaDFpMGN4YW81bGl4dzhiNDAycWVsMHNxaWtzOGFxaSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/dBXNPw0XBdF1n82BBf/giphy.webp'
+
+  const date = document.createElement('div');
+  const conditions = document.createElement('div');
+  const highTemp = document.createElement('div');
+  const lowTemp = document.createElement('div');
+  const precip = document.createElement('div');
+
+  date.className = 'date';
+  conditions.className = 'conditions';
+  highTemp.className = 'high-temp';
+  lowTemp.className = 'low-temp';
+  precip.className = 'precip';
+
+  date.textContent = new Date(data.datetime).toDateString().slice(0, -5);
+  conditions.textContent = data.conditions;
+  highTemp.textContent = 'High ' + data.tempmax + '°C';
+  lowTemp.textContent = 'Low ' + data.tempmin + '°C';
+  precip.textContent = data.precipprob + '%'
+
+  const img = document.createElement('img');
+  img.src = sunGif
+
+  const card = document.createElement('div');
+  card.className = 'card day-' + index;
+  card.append(date, conditions, highTemp, lowTemp, precip, img);
+  return card;
+}
+
+async function createCards () {
+  const weatherCards = document.querySelector('#weather-cards');
+  const weatherData = await getWeather();
+  weatherData.dailyWeather.forEach((element, index) => {
+    console.log(index, element);
+    weatherCards.append(createWeatherCard(element, index));
+  });
+}
+
+createCards();
 
