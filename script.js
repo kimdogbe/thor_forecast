@@ -1,4 +1,14 @@
 const apiKey = 'V6WW2UCQDJ3WU8WGJWSKGBS6X';
+const searchBtn = document.querySelector('#search-button');
+const searchBox = document.querySelector('#search-box');
+
+searchBtn.addEventListener('click', (event) => {
+  event.preventDefault();
+  if (searchBox.value !== ''){
+    createCards(searchBox.value);
+  }
+});
+
 
 async function getWeather(location='bristol') {
   const url = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${location}?unitGroup=uk&key=${apiKey}&contentType=json`;
@@ -65,14 +75,13 @@ function createWeatherCard (data, index) {
   return card;
 }
 
-async function createCards () {
+async function createCards (city) {
   const weatherCards = document.querySelector('#weather-cards');
-  const weatherData = await getWeather();
+  weatherCards.textContent = '';
+  const weatherData = await getWeather(city);
   weatherData.dailyWeather.forEach((element, index) => {
     console.log(index, element);
     weatherCards.append(createWeatherCard(element, index));
   });
 }
-
-createCards();
 
