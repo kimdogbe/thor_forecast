@@ -75,10 +75,29 @@ function createWeatherCard (data, index) {
   return card;
 }
 
+function updateLocationCard (weatherData) {
+  const card = document.querySelector('#location-card');
+  const location = document.querySelector('#city-name');
+  const longLat = document.querySelector('#long-lat');
+  const sunrise = document.querySelector('#sunrise');
+  const sunset = document.querySelector('#sunset');
+  
+  location.textContent = 'Location: ' + weatherData.fullLocation;
+  longLat.textContent = 'Coordinates: ' + weatherData.long + ',' + weatherData.lat;
+  sunrise.innerHTML += weatherData.currentConditions.sunrise;
+  sunset.innerHTML += weatherData.currentConditions.sunset;
+
+  card.append(location, longLat, sunrise, sunset);
+}
+
 async function createCards (city) {
   const weatherCards = document.querySelector('#weather-cards');
   weatherCards.textContent = '';
+
   const weatherData = await getWeather(city);
+  // console.log(weatherData.fullLocation);
+  updateLocationCard(weatherData);
+
   weatherData.dailyWeather.forEach((element, index) => {
     console.log(index, element);
     weatherCards.append(createWeatherCard(element, index));
