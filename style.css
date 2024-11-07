@@ -5,6 +5,7 @@
 }
 
 #container {
+  font-family: 'Funnel Sans', 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
   display: grid;
   width: 100vw;
   height: 100vh;
@@ -42,3 +43,18 @@ label {
   margin-bottom: 5px;
 }
 
+#weather-cards {
+  display: grid;
+  overflow-x: scroll;
+  font-family: 'Doto';
+  font-weight: 600;
+}
+
+.card {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  background-color: rgba(39, 187, 245, 0.503);
+  border-radius: 10px;
+  padding: 10px;
+  width: 20%;
+}
