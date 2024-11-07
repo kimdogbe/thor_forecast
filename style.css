@@ -86,3 +86,7 @@ img {
 #sunset img {
   width: 24px;
 }
+
+#description {
+  font-size: 1rem;
+}

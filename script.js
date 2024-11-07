@@ -81,13 +81,15 @@ function updateLocationCard (weatherData) {
   const longLat = document.querySelector('#long-lat');
   const sunrise = document.querySelector('#sunrise');
   const sunset = document.querySelector('#sunset');
+  const description = document.querySelector('#description');
   
   location.textContent = 'Location: ' + weatherData.fullLocation;
   longLat.textContent = 'Coordinates: ' + weatherData.long + ',' + weatherData.lat;
   sunrise.innerHTML += weatherData.currentConditions.sunrise;
   sunset.innerHTML += weatherData.currentConditions.sunset;
+  description.textContent = weatherData.weatherDescription;
 
-  card.append(location, longLat, sunrise, sunset);
+  card.append(location, longLat, sunrise, sunset, description);
 }
 
 async function createCards (city) {
@@ -95,7 +97,7 @@ async function createCards (city) {
   weatherCards.textContent = '';
 
   const weatherData = await getWeather(city);
-  // console.log(weatherData.fullLocation);
+  console.log(weatherData);
   updateLocationCard(weatherData);
 
   weatherData.dailyWeather.forEach((element, index) => {
