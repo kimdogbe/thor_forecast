@@ -18,7 +18,7 @@
   flex-direction: column;
   align-items: center;
   gap: 10px;
-  background-color: rgba(1, 1, 1, 0.5);
+  background-color: rgba(1, 1, 1, 0.7);
   justify-self: center;
   height: fit-content;
   width: fit-content;
@@ -43,6 +43,11 @@ label {
   margin-bottom: 5px;
 }
 
+a {
+  text-decoration: none;
+  color: black;
+}
+
 #weather-cards {
   display: grid;
   grid-auto-flow: column;
@@ -56,7 +61,7 @@ label {
   display: grid;
   gap: 10px;
   grid-template-columns: 1fr 1fr;
-  background-color: rgba(39, 187, 245, 0.503);
+  background-color: rgba(39, 187, 245, 0.7);
   border-radius: 10px;
   padding: 10px;
   width: 200px;
@@ -74,7 +79,7 @@ img {
   font-size: 1.5rem;
   font-weight: 700;
   align-items: center;
-  background-color: rgba(3, 149, 193, 0.5);
+  background-color: rgba(3, 149, 193, 0.7);
   justify-self: center;
   height: fit-content;
   width: fit-content;
@@ -106,4 +111,28 @@ img {
   50% {background-position: 100% 100%,100% 0,0    0   ,0 100%}
   90%,
   100%{background-position: 100% 100%,0 100%,0    0   ,100% 0}
+}
+
+html {
+  --s: 30px; /* control the size*/
+  --c1: #e5fcc2;
+  --c2: #45ada8;
+  
+  --_s:37.5% 12.5% at 62.5%;
+  --_g:34% 99%,#0000 101%;
+  --g1:radial-gradient(var(--_s) 100%,#0000 32%,var(--c1) var(--_g));
+  --g2:radial-gradient(var(--_s) 0   ,#0000 32%,var(--c1) var(--_g));
+  --g3:radial-gradient(var(--_s) 100%,#0000 32%,var(--c2) var(--_g));
+  --g4:radial-gradient(var(--_s) 0   ,#0000 32%,var(--c2) var(--_g));
+  background:
+    var(--g1),
+    var(--g2) 0                calc(3*var(--s)),
+    var(--g3) var(--s)         calc(3*var(--s)),
+    var(--g4) var(--s)         calc(6*var(--s)),
+    var(--g1) calc(2*var(--s)) calc(6*var(--s)),
+    var(--g2) calc(2*var(--s)) calc(9*var(--s)),
+    var(--g3) calc(3*var(--s)) calc(9*var(--s)),
+    var(--g4) calc(3*var(--s)) 0,
+    repeating-linear-gradient(var(--c1) 0 25%,var(--c2) 0 50%);
+  background-size: calc(4*var(--s)) calc(12*var(--s));
 }
